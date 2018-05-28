@@ -1,0 +1,39 @@
+costos(M,E,C,A){
+  n = M[0].length() 
+  for(y=n; y>=1; y--){
+    for(x=n; x>=1; x--){
+      for(z=0; z<=E; z++){
+        if(x==n && y==n) then C[x][y][z] = 0
+        if(x!=n && y==n) then
+          if(z<M[x+1][y]) then C[x][y][z] = ∞
+            else C[x][y][z] = M[x+1][y] + C[x+1][y][z-M[x+1][y]]
+                 A[x+1][y][z-M[x+1][y]] = "abajo"  
+        if(x==n && y!=n) then
+          if(z<M[x][y+1]) then C[x][y][z] = ∞
+            else C[x][y][z] = M[x][y+1] + C[x][y+1][z-M[x][y+1]]
+                 A[x][y+1][z-M[x][y+1]] = "derecha"
+        if(z<M[x+1][y] && z<M[x][y+1] && z<M[x+1][y+1]) then C[x][y][z] = ∞
+        if(z>M[x+1][y] && z>M[x][y+1] && z>M[x+1][y+1]) then C[x][y][z] = min(M[x+1][y] + C[x+1][y][z-M[x+1][y]],
+                                                                              M[x][y+1] + C[x][y+1][z-M[x][y+1]],
+                                                                              M[x+1][y+1] + C[x+1][y+1][z-M[x+1][y+1]])
+                                                             A[x+1][y][z-M[x+1][y]] = "abajo"
+                                                             A[x][y+1][z-M[x][y+1]] = "derecha"
+                                                             A[x+1][y+1][z-M[x+1][y+1]]] = "diagonal inf der"
+        if(z>M[x+1][y] && z>M[x][y+1] && z<M[x+1][y+1]) then C[x][y][z] = min(M[x+1][y] + C[x+1][y][z-M[x+1][y]],
+                                                                              M[x][y+1] + C[x][y+1][z-M[x][y+1]])
+                                                             A[x+1][y][z-M[x+1][y]] = "abajo"
+                                                             A[x][y+1][z-M[x][y+1]] = "derecha"
+        if(z>M[x+1][y] && z<M[x][y+1] && z>M[x+1][y+1]) then C[x][y][z] = min(M[x+1][y] + C[x+1][y][z-M[x+1][y]],
+                                                                              M[x+1][y+1] + C[x+1][y+1][z-M[x+1][y+1]])
+                                                             A[x+1][y][z-M[x+1][y]] = "abajo"
+                                                             A[x+1][y+1][z-M[x+1][y+1]] = "diagonal inf der"
+        if(z<M[x+1][y] && z>M[x][y+1] && z>M[x+1][y+1]) then C[x][y][z] = min(M[x][y+1] + C[x][y+1][z-M[x][y+1]],
+                                                                              M[x+1][y+1] + C[x+1][y+1][z-M[x+1][y+1]])
+                                                             A[x][y+1][z-M[x][y+1]] = "derecha"
+                                                             A[x+1][y+1][z-M[x+1][y+1]] = "diagonal inf der"
+      }
+    }  
+  }
+}
+
+
